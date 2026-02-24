@@ -10,21 +10,27 @@
       ./hardware-configuration.nix
     ];
 
+  # --- Nix settings ---
   # Enable automatic garbage collection and optimization
   nix.gc = {
     automatic = true;
-    dates = "weekly";  
+    dates = "weekly";
   };
   nix.optimise.automatic = true;
-  
+
+  # Enable Flakes and the new command-line tool
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # --- Boot ---
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   # Disable TPM
   boot.initrd.systemd.tpm2.enable = false; # stage-1 (initrd) systemd
   systemd.tpm2.enable = false; # stage-2 systemd
 
+  # --- Networking & locale ---
   networking.hostName = "bixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -45,6 +51,7 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
+  # --- Desktop & input ---
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
   # Enable the Display Manager and Desktop Environment
@@ -52,13 +59,14 @@
   # services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.enable = true;
   services.desktopManager.plasma6.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true; 
-  # services.desktopManager.cosmic.enable = true; 
+  # services.xserver.desktopManager.gnome.enable = true;
+  # services.desktopManager.cosmic.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
+  # --- Printing & audio ---
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -73,32 +81,29 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
+  # --- Users ---
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.biggels = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      tree
-    ];
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
   };
 
+  # --- Programs ---
   programs.firefox.enable = true;
-  programs.git = {
+  programs.chromium.enable = true;
+  programs.steam = {
     enable = true;
-    config = {
-      user = {
-        name = "Biggels";
-	email = "haackra@gmail.com";
-      };
-    };
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
   };
 
-  # List packages installed in system profile.
+
+  # --- System packages ---
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    neovim
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -145,4 +150,3 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-
