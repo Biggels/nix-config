@@ -5,11 +5,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   # --- Nix settings ---
   # Enable automatic garbage collection and optimization
   nix.gc = {
@@ -31,7 +26,6 @@
   systemd.tpm2.enable = false; # stage-2 systemd
 
   # --- Networking & locale ---
-  networking.hostName = "bixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.

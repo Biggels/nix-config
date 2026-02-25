@@ -17,12 +17,31 @@
       system = "x86_64-linux";
     in {
       nixosConfigurations = {
-        # Matches networking.hostName in configuration.nix
-        bixos = nixpkgs.lib.nixosSystem {
+        # Practice Machine (Dell)
+        "bixos-dell-dkh2" = nixpkgs.lib.nixosSystem {
           inherit system;
 
           modules = [
-            ./configuration.nix
+            ./hosts/bixos-dell-dkh2/default.nix
+
+            # Home Manager as a NixOS module
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              # User home configuration
+              home-manager.users.biggels = import ./home.nix;
+            }
+          ];
+        };
+
+        # Main PC (iBUYPOWER)
+        "bixos-ibp-9290" = nixpkgs.lib.nixosSystem {
+          inherit system;
+
+          modules = [
+            ./hosts/bixos-ibp-9290/default.nix
 
             # Home Manager as a NixOS module
             home-manager.nixosModules.home-manager
