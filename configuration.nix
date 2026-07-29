@@ -57,6 +57,7 @@
   environment.systemPackages = with pkgs; [
     discord
     emacs
+    stow
   ];
 
   # Keep this at the version used for the first installation of this system.

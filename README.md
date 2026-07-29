@@ -14,6 +14,7 @@ The initial system provides:
 - Git
 - Discord
 - Emacs
+- GNU Stow
 
 There is no Home Manager, flake, gaming setup, or project-language tooling yet.
 
