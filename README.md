@@ -9,8 +9,11 @@ The initial system provides:
 - the Plasma desktop
 - NetworkManager
 - PipeWire audio
+- the NVIDIA driver for a GeForce RTX 2060
 - Firefox
 - Git
+- Discord
+- Emacs
 
 There is no Home Manager, flake, gaming setup, or project-language tooling yet.
 
@@ -82,7 +85,7 @@ sudo nixos-rebuild switch --rollback
 - Add ordinary command-line tools and desktop applications to
   `environment.systemPackages`.
 - Prefer a dedicated NixOS option when a program or service has one, as Firefox
-  does in the starter configuration.
+  and Git do in the starter configuration.
 - Add system behavior next to the related section: boot, networking, desktop,
   audio, users, or programs.
 - Split the file into modules only after it becomes difficult to navigate.

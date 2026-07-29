@@ -11,6 +11,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # NVIDIA's userspace driver and Discord are unfree software.
+  nixpkgs.config.allowUnfree = true;
+
   # Networking and regional settings
   networking.hostName = "bixos-ibp-9290";
   networking.networkmanager.enable = true;
@@ -23,6 +26,11 @@
   services.xserver.xkb.layout = "us";
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+  # Graphics
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.graphics.enable = true;
+  hardware.nvidia.open = true;
 
   # Audio
   security.rtkit.enable = true;
@@ -40,10 +48,15 @@
 
   # Programs with dedicated NixOS options go here.
   programs.firefox.enable = true;
+  programs.git = {
+    enable = true;
+    config.init.defaultBranch = "main";
+  };
 
   # Other system-wide programs go in this list.
   environment.systemPackages = with pkgs; [
-    git
+    discord
+    emacs
   ];
 
   # Keep this at the version used for the first installation of this system.
