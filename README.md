@@ -1,5 +1,11 @@
 # NixOS configuration
 
+> [!NOTE]
+> Active development has moved to the
+> [`nixos` package in the dotfiles repository](https://github.com/Biggels/dotfiles/tree/main/nixos).
+> This repository remains available as migration history, but it is no longer
+> the source of truth.
+
 A deliberately small, non-flake configuration for one desktop. The goal is to
 start with a system that is useful, understandable, and easy to grow only when
 there is a real need.
